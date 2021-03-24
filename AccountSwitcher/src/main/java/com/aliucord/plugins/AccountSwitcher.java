@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("unused")
 public class AccountSwitcher extends Plugin {
@@ -38,16 +37,16 @@ public class AccountSwitcher extends Plugin {
     @Override
     public void start(Context context) {
         commandChoices = new ArrayList<>();
-        ApplicationCommandOption requiredNameOption = new ApplicationCommandOption(ApplicationCommandType.STRING, "name", "Token name", null, true, true, null, null);
+        ApplicationCommandOption requiredNameOption = new ApplicationCommandOption(ApplicationCommandType.STRING, "name", "Token Identifier", null, true, true, null, null);
         ApplicationCommandOption requiredTokenOption = new ApplicationCommandOption(ApplicationCommandType.STRING, "token", "Account Token", null, true, true, null, null);
-        ApplicationCommandOption requiredTokenChoice = new ApplicationCommandOption(ApplicationCommandType.STRING, "name", "Token name", null, true, true, commandChoices, null);
-        ApplicationCommandOption restartDiscordChoice = new ApplicationCommandOption(ApplicationCommandType.BOOLEAN, "restart", "Restarts discord", null, false, true, null, null);
+        ApplicationCommandOption requiredTokenChoice = new ApplicationCommandOption(ApplicationCommandType.STRING, "name", "Token Identifier", null, true, true, commandChoices, null);
+        ApplicationCommandOption restartDiscordChoice = new ApplicationCommandOption(ApplicationCommandType.BOOLEAN, "restart", "Reload Discord on account switch", null, false, true, null, null);
 
         List<ApplicationCommandOption> Commands = new ArrayList<ApplicationCommandOption>() {{
             add(new ApplicationCommandOption(
                     ApplicationCommandType.SUBCOMMAND,
                     "list",
-                    "Privately sends your added tokens",
+                    "Lists all tokens",
                     null, false, false, null,
                     Collections.emptyList()
             ));
@@ -91,7 +90,7 @@ public class AccountSwitcher extends Plugin {
 
         commands.registerCommand(
                 "token",
-                "Login to and manage your saved tokens",
+                "Log into and manage your saved tokens",
                 Commands,
                 args -> {
                     if (args.containsKey("list")) return ListTokens.execute(sets);

@@ -17,8 +17,6 @@ public class AddToken {
         Matcher nfaToken = Pattern.compile("[\\w-]{24}\\.[\\w-]{6}\\.[\\w-]{27}").matcher(token);
         Matcher mfaToken = Pattern.compile("mfa\\.[\\w-]{84}").matcher(token);
         String returnMessage;
-        // to do:
-        // reload discord using jubes things
 
         if (name == null || name.trim().equals("") || token == null || token.trim().equals("")) {
             returnMessage = "Nice try, but the name/token can not be empty.";
