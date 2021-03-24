@@ -1,7 +1,7 @@
 ## Aliucord Plugins
-This is my Aliucord Plugin repository (https://github.com/Aliucord)
+This is my Aliucord Plugin repository. (https://github.com/Aliucord)
 
-You can find plugin builds in the `builds branch`
+You can find plugin builds in the `builds` branch.
 
 ### Account Switcher
-Lets you add and remove tokens with chat commands and easily log into them with `/token login {TOKEN_NAME}`
+Lets you add and remove tokens with chat commands and easily log into them with `/token login {TOKEN_NAME}`.
