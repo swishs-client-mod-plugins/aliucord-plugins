@@ -1,5 +1,5 @@
 ## Aliucord Plugins
-This is my Aliucord Plugin repository. (https://github.com/Aliucord)
+This is my [Aliucord](https://github.com/Aliucord) Plugin repository.
 
 You can find plugin builds in the `builds` branch.
 
