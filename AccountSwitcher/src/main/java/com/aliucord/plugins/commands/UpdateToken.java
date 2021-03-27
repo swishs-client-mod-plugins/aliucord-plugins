@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AddToken {
-    public static CommandsAPI.CommandResult execute(Map<String, ?> args, SettingsAPI sets, AccountSwitcher Main) {
+public class UpdateToken {
+    public static CommandsAPI.CommandResult execute(Map<String, ?> args, SettingsAPI sets) {
         HashMap<String, String> settings = sets.getObject("tokens", new HashMap<>(), AccountSwitcher.settingsType);
         String name = (String) args.get("name");
         String token = ((String) args.get("token")).equals("current token")
@@ -23,8 +23,8 @@ public class AddToken {
 
         if (name == null || name.trim().equals("") || token == null || token.trim().equals("")) {
             returnMessage = "Nice try, but the name/token can not be empty.";
-        } else if (settings.containsKey((name))) {
-            returnMessage = "The name \"" + name + "\" has already been used!";
+        } else if (!settings.containsKey((name))) {
+            returnMessage = "I couldn't find the name \"" + name + "\" saved anywhere!";
         } else if (settings.containsValue((token))) {
             returnMessage = "Token ||" + token + "|| is already added!";
         } else if (!nfaToken.matches() && !mfaToken.matches()) {
@@ -32,8 +32,7 @@ public class AddToken {
         } else {
             settings.put(name, token);
             sets.setObject("tokens", settings);
-            Main.addChoice(name);
-            returnMessage = "Successfully added token \"" + name + "\"";
+            returnMessage = "The name \"" + name + "\" was updated with the token ||" + token + "||";
         }
 
         return new CommandsAPI.CommandResult(returnMessage, null, false);

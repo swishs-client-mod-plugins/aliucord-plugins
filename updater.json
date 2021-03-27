@@ -1,4 +1,7 @@
 {
+    "AccountSwitcher": {
+        "version": "1.0.2"
+    },
     "default": {
         "minimumDiscordVersion": 1456,
         "version": "1.0.0",

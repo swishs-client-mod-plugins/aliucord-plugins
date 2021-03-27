@@ -16,11 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Login {
-    public static CommandsAPI.CommandResult execute(Map<String, ?> args, SettingsAPI sets, Context context) {
+    public static CommandsAPI.CommandResult execute(Map<String, ?> args, SettingsAPI sets, AccountSwitcher main, Context context) {
         HashMap<String, String> settings = sets.getObject("tokens", new HashMap<>(), AccountSwitcher.settingsType);
         String name = (String) args.get("name");
-        Boolean restart = (Boolean) args.get("restart");
         String token = settings.get(name);
+        Boolean restart = (Boolean) args.get("restart");
         String returnMessage;
 
         if (name == null || name.equals("")) {
@@ -28,19 +28,22 @@ public class Login {
         } else if (!settings.containsKey((name))) {
             returnMessage = "Found no token by the name of \"" + name + "\"";
         } else {
-            StoreAuthentication.access$dispatchLogin(StoreStream.getAuthentication(), new ModelLoginResult(false, null, token, null));
-            // will only return if the app doesn't restart due to Thread.sleep()
-            returnMessage = "Hi! It seems you've chosen not to restart... things may be a bit buggy, feel free to quit the app and restart it manually to fully refresh discord!";
-
-            if (restart == null || restart) {
+            main.userSettings = StoreStream.getUserSettings().prefs.getAll();
+            if (restart == null || !restart) {
+                StoreStream.getAuthentication().setAuthed(null);
+                StoreAuthentication.access$dispatchLogin(StoreStream.getAuthentication(), new ModelLoginResult(false, null, token, null));
+            } else {
+                StoreAuthentication.access$dispatchLogin(StoreStream.getAuthentication(), new ModelLoginResult(false, null, token, null));
                 try { Thread.sleep(500); } catch (InterruptedException ex) { Thread.currentThread().interrupt(); }
                 PackageManager packageManager = context.getPackageManager();
                 Intent intent = ((PackageManager) packageManager).getLaunchIntentForPackage(context.getPackageName());
                 ComponentName componentName = intent.getComponent();
+
                 Intent mainIntent = Intent.makeRestartActivityTask(componentName);
                 context.startActivity(mainIntent);
                 System.exit(0);
             }
+            returnMessage = "\"" + name + "\" has been logged into successfully.";
         }
 
         return new CommandsAPI.CommandResult(returnMessage, null, false);
