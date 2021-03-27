@@ -32,8 +32,8 @@ public class AccountSwitcher extends Plugin {
         Manifest manifest = new Manifest();
         manifest.authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
         manifest.description = "Lets you switch between multiple accounts with chat commands.";
-        manifest.version = "1.0.0";
-        manifest.updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json"; // change
+        manifest.version = "1.0.2";
+        manifest.updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         return manifest;
     }
 
