@@ -38,9 +38,9 @@ public class AccountSwitcher extends Plugin {
     }
 
     public static Map<String, List<String>> getClassesToPatch() {
-        Map<String, List<String>> map = new HashMap<>();
-        map.put("com.discord.stores.StoreAuthentication", Collections.singletonList("handleAuthToken$app_productionDiscordExternalRelease"));
-        return map;
+        return new HashMap<String, List<String>>() {{
+            put("com.discord.stores.StoreAuthentication", Collections.singletonList("handleAuthToken$app_productionDiscordExternalRelease"));
+        }};
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -66,78 +66,18 @@ public class AccountSwitcher extends Plugin {
         ApplicationCommandOption restartDiscordChoice = new ApplicationCommandOption(ApplicationCommandType.BOOLEAN, "restart", "Will reload discord when switching accounts (use this if you're having issues)", null, false, true, null, null);
 
         List<ApplicationCommandOption> Commands = new ArrayList<ApplicationCommandOption>() {{
-            add(new ApplicationCommandOption(
-                    ApplicationCommandType.SUBCOMMAND,
-                    "add",
-                    "Add a token",
-                    null,
-                    false,
-                    false,
-                    null,
-                    Arrays.asList(requiredNameOption, requiredTokenOption)
-            ));
-
-            add(new ApplicationCommandOption(
-                    ApplicationCommandType.SUBCOMMAND,
-                    "remove",
-                    "Remove a token",
-                    null,
-                    false,
-                    false,
-                    null,
-                    Collections.singletonList(requiredNameChoice)
-            ));
-
-            add(new ApplicationCommandOption(
-                    ApplicationCommandType.SUBCOMMAND,
-                    "list",
-                    "Lists all tokens",
-                    null, false, false, null,
-                    Collections.emptyList()
-            ));
-
-            add(new ApplicationCommandOption(
-                    ApplicationCommandType.SUBCOMMAND,
-                    "update",
-                    "Update a Token (from its name value)",
-                    null,
-                    false,
-                    false,
-                    null,
-                    Arrays.asList(requiredNameChoice, requiredTokenOption)
-            ));
-
-            add(new ApplicationCommandOption(
-                    ApplicationCommandType.SUBCOMMAND,
-                    "rename",
-                    "Rename a token (from its name value)",
-                    null,
-                    false,
-                    false,
-                    null,
-                    Arrays.asList(requiredNameChoice, requiredNewNameOption)
-            ));
-
-            add(new ApplicationCommandOption(
-                    ApplicationCommandType.SUBCOMMAND,
-                    "login",
-                    "Log into a token",
-                    null,
-                    false,
-                    false,
-                    null,
-                    Arrays.asList(requiredNameChoice, restartDiscordChoice)
-            ));
+            add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "add", "Add a token", null, false, false, null, Arrays.asList(requiredNameOption, requiredTokenOption)));
+            add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "remove", "Remove a token", null, false, false, null, Collections.singletonList(requiredNameChoice)));
+            add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "list", "Lists all tokens", null, false, false, null, Collections.emptyList()));
+            add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "update", "Update a Token (from its name value)", null, false, false, null, Arrays.asList(requiredNameChoice, requiredTokenOption)));
+            add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "rename", "Rename a token (from its name value)", null, false, false, null, Arrays.asList(requiredNameChoice, requiredNewNameOption)));
+            add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "login", "Log into a token", null, false, false, null, Arrays.asList(requiredNameChoice, restartDiscordChoice)));
         }};
 
         HashMap<String, String> settings = sets.getObject("tokens", null, settingsType);
         if (settings != null) for (String name : settings.keySet()) addChoice(name);
 
-        commands.registerCommand(
-                "token",
-                "Log into and manage your saved tokens",
-                Commands,
-                args -> {
+        commands.registerCommand("token", "Log into and manage your saved tokens", Commands, args -> {
                     if (args.containsKey("add")) return AddToken.execute((Map<String, ?>) args.get("add"), sets, this);
                     if (args.containsKey("remove")) return RemoveToken.execute((Map<String, ?>) args.get("remove"), sets, this);
                     if (args.containsKey("list")) return ListTokens.execute(sets);
@@ -150,21 +90,12 @@ public class AccountSwitcher extends Plugin {
         );
     }
 
-    public static final Type settingsType = TypeToken.getParameterized(HashMap.class, String.class, String.class).getType();
     public Map<String, ?> userSettings;
     public List<CommandChoice> commandChoices;
-
-    public void addChoice(String name) {
-        commandChoices.add(Utils.createCommandChoice(name, name));
-    }
-
-    public void removeChoice(String name) {
-        commandChoices.remove(Utils.createCommandChoice(name, name));
-    }
+    public static final Type settingsType = TypeToken.getParameterized(HashMap.class, String.class, String.class).getType();
+    public void addChoice(String name) { commandChoices.add(Utils.createCommandChoice(name, name)); }
+    public void removeChoice(String name) { commandChoices.remove(Utils.createCommandChoice(name, name)); }
 
     @Override
-    public void stop(Context context) {
-        commands.unregisterAll();
-        patcher.unpatchAll();
-    }
+    public void stop(Context context) { commands.unregisterAll(); patcher.unpatchAll(); }
 }
