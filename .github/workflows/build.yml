@@ -23,7 +23,7 @@ jobs:
     - name: Checkout Aliucord
       uses: actions/checkout@master
       with:
-        repository: 'Aliucord/Aliucord'
+        repository: 'Swishilicous/Aliucord'
         path: 'repo'
         token: ${{ secrets.AUTH_TOKEN }}
 
