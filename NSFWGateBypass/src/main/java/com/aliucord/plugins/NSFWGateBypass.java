@@ -4,11 +4,12 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.aliucord.patcher.PrePatchRes;
 import com.discord.api.user.NsfwAllowance;
 
 import com.aliucord.entities.Plugin;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,16 +26,17 @@ public class NSFWGateBypass extends Plugin {
         manifest.updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json"; // change
         return manifest;
     }
-
+    private static final String className = "com.discord.models.user.MeUser";
     public static Map<String, List<String>> getClassesToPatch() {
         return new HashMap<String, List<String>>() {{
-            put("com.discord.models.user.MeUser", Collections.singletonList("getNsfwAllowance"));
+            put(className, Arrays.asList("getNsfwAllowance", "getHasBirthday"));
         }};
     }
 
     @Override
     public void start(Context context) {
-        patcher.patch("com.discord.models.user.MeUser", "getNsfwAllowance", (_this, args, res) -> NsfwAllowance.ALLOWED);
+        patcher.patch(className, "getNsfwAllowance", (_this, args, res) -> NsfwAllowance.ALLOWED);
+        patcher.prePatch(className, "getHasBirthday", (_this, args) -> new PrePatchRes(args, true));
     }
 
     @Override
