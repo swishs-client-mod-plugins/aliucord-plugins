@@ -1,6 +1,9 @@
 {
     "AccountSwitcher": {
-        "version": "1.0.2"
+        "version": "1.0.3"
+    },
+    "NSFWGateBypass": {
+        "version": "1.0.1"
     },
     "default": {
         "minimumDiscordVersion": 1456,
