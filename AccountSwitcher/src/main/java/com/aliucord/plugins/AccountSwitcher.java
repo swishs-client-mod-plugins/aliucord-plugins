@@ -39,14 +39,14 @@ public class AccountSwitcher extends Plugin {
 
     public static Map<String, List<String>> getClassesToPatch() {
         return new HashMap<String, List<String>>() {{
-            put("com.discord.stores.StoreAuthentication", Collections.singletonList("handleAuthToken$app_productionDiscordExternalRelease"));
+            put("com.discord.stores.StoreAuthentication", Collections.singletonList("handleAuthToken$app_productionGoogleRelease"));
         }};
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void start(Context context) {
-        patcher.patch("com.discord.stores.StoreAuthentication", "handleAuthToken$app_productionDiscordExternalRelease", (_this, args, ret) -> {
+        patcher.patch("com.discord.stores.StoreAuthentication", "handleAuthToken$app_productionGoogleRelease", (_this, args, ret) -> {
             if (userSettings != null) {
                 userSettings.remove("STORE_AUTHED_TOKEN");
                 userSettings.forEach((key, value) -> {

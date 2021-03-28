@@ -15,7 +15,7 @@ public class AddToken {
         HashMap<String, String> settings = sets.getObject("tokens", new HashMap<>(), AccountSwitcher.settingsType);
         String name = (String) args.get("name");
         String token = ((String) args.get("token")).equals("current token")
-                ? StoreStream.getAuthentication().getAuthToken$app_productionDiscordExternalRelease()
+                ? StoreStream.getAuthentication().getAuthToken$app_productionGoogleRelease()
                 : (String) args.get("token");
         Matcher nfaToken = Pattern.compile("[\\w-]{24}\\.[\\w-]{6}\\.[\\w-]{27}").matcher(token);
         Matcher mfaToken = Pattern.compile("mfa\\.[\\w-]{84}").matcher(token);
