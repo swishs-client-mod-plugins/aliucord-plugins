@@ -19,12 +19,12 @@ public class NSFWGateBypass extends Plugin {
     @NonNull
     @Override
     public Manifest getManifest() {
-        Manifest manifest = new Manifest();
-        manifest.authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
-        manifest.description = "Bypasses the NSFW age gate.";
-        manifest.version = "1.0.1";
-        manifest.updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json"; // change
-        return manifest;
+        return new Manifest() {{
+            authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
+            description = "Bypasses the NSFW age gate.";
+            version = "1.0.1";
+            updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
+        }};
     }
     private static final String className = "com.discord.models.user.MeUser";
     public static Map<String, List<String>> getClassesToPatch() {

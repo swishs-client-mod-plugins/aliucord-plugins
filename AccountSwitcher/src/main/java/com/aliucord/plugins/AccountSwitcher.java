@@ -29,12 +29,12 @@ public class AccountSwitcher extends Plugin {
     @NonNull
     @Override
     public Manifest getManifest() {
-        Manifest manifest = new Manifest();
-        manifest.authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
-        manifest.description = "Lets you switch between multiple accounts with chat commands.";
-        manifest.version = "1.0.3";
-        manifest.updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
-        return manifest;
+        return new Manifest() {{
+            authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
+            description = "Lets you switch between multiple accounts with chat commands.";
+            version = "1.0.3";
+            updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
+        }};
     }
 
     public static Map<String, List<String>> getClassesToPatch() {
@@ -78,16 +78,15 @@ public class AccountSwitcher extends Plugin {
         if (settings != null) for (String name : settings.keySet()) addChoice(name);
 
         commands.registerCommand("token", "Log into and manage your saved tokens", Commands, args -> {
-                    if (args.containsKey("add")) return AddToken.execute((Map<String, ?>) args.get("add"), sets, this);
-                    if (args.containsKey("remove")) return RemoveToken.execute((Map<String, ?>) args.get("remove"), sets, this);
-                    if (args.containsKey("list")) return ListTokens.execute(sets);
-                    if (args.containsKey("update")) return UpdateToken.execute((Map<String, ?>) args.get("update"), sets);
-                    if (args.containsKey("rename")) return RenameToken.execute((Map<String, ?>) args.get("rename"), sets, this);
-                    if (args.containsKey("login")) return Login.execute((Map<String, ?>) args.get("login"), sets, this, context);
+            if (args.containsKey("add")) return AddToken.execute((Map<String, ?>) args.get("add"), sets, this);
+            if (args.containsKey("remove")) return RemoveToken.execute((Map<String, ?>) args.get("remove"), sets, this);
+            if (args.containsKey("list")) return ListTokens.execute(sets);
+            if (args.containsKey("update")) return UpdateToken.execute((Map<String, ?>) args.get("update"), sets);
+            if (args.containsKey("rename")) return RenameToken.execute((Map<String, ?>) args.get("rename"), sets, this);
+            if (args.containsKey("login")) return Login.execute((Map<String, ?>) args.get("login"), sets, this, context);
 
-                    return new CommandsAPI.CommandResult("Error! Insufficient arguments and/or no arguments provided.", null ,false);
-                }
-        );
+            return new CommandsAPI.CommandResult("Error! Insufficient arguments and/or no arguments provided.", null ,false);
+        });
     }
 
     public Map<String, ?> userSettings;
