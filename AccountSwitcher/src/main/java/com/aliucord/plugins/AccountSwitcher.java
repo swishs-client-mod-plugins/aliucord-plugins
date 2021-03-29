@@ -32,7 +32,7 @@ public class AccountSwitcher extends Plugin {
         return new Manifest() {{
             authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
             description = "Lets you switch between multiple accounts with chat commands.";
-            version = "1.0.4";
+            version = "1.0.41";
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
     }
@@ -79,11 +79,12 @@ public class AccountSwitcher extends Plugin {
 
         commands.registerCommand("token", "Log into and manage your saved tokens", Commands, args -> {
             // username takes a little bit to update which is why it's here
-            if (settings.isEmpty()) {
+            HashMap<String, String> tempSettings = sets.getObject("tokens", null, settingsType);
+            if (tempSettings.isEmpty()) {
                 String username = StoreStream.getUsers().getMe().getUsername();
                 String token = StoreStream.getAuthentication().getAuthToken$app_productionGoogleRelease();
-                settings.put(username, token);
-                sets.setObject("tokens", settings);
+                tempSettings.put(username, token);
+                sets.setObject("tokens", tempSettings);
                 addChoice(username);
             }
 
