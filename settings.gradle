@@ -1,5 +1,6 @@
 include ':AccountSwitcher'
 include ':NSFWGateBypass'
+include ':ReplaceTMs'
 rootProject.name = "plugins"
 
 include ':Aliucord'
