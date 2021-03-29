@@ -14,7 +14,7 @@ public class RenameToken {
         String rename = (String) args.get("newName");
         String returnMessage;
 
-        if (name == null || name.trim().equals("")) {
+        if (name == null || name.equals("")) {
             returnMessage = "Nice try, but the name can not be empty.";
         } else if (!settings.containsKey((name))) {
             returnMessage = "I couldn't find the name \"" + name + "\" saved anywhere!";

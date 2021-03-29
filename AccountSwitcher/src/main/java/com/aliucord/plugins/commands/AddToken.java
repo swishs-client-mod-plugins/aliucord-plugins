@@ -3,7 +3,6 @@ package com.aliucord.plugins.commands;
 import com.aliucord.api.CommandsAPI;
 import com.aliucord.api.SettingsAPI;
 import com.aliucord.plugins.AccountSwitcher;
-import com.discord.stores.StoreStream;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,14 +13,12 @@ public class AddToken {
     public static CommandsAPI.CommandResult execute(Map<String, ?> args, SettingsAPI sets, AccountSwitcher Main) {
         HashMap<String, String> settings = sets.getObject("tokens", new HashMap<>(), AccountSwitcher.settingsType);
         String name = (String) args.get("name");
-        String token = ((String) args.get("token")).equals("current token")
-                ? StoreStream.getAuthentication().getAuthToken$app_productionGoogleRelease()
-                : (String) args.get("token");
+        String token = (String) args.get("token");
         Matcher nfaToken = Pattern.compile("[\\w-]{24}\\.[\\w-]{6}\\.[\\w-]{27}").matcher(token);
         Matcher mfaToken = Pattern.compile("mfa\\.[\\w-]{84}").matcher(token);
         String returnMessage;
 
-        if (name == null || name.trim().equals("") || token == null || token.trim().equals("")) {
+        if (name == null || name.equals("") || token == null || token.equals("")) {
             returnMessage = "Nice try, but the name/token can not be empty.";
         } else if (settings.containsKey((name))) {
             returnMessage = "The name \"" + name + "\" has already been used!";

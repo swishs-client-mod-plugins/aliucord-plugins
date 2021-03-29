@@ -32,7 +32,7 @@ public class AccountSwitcher extends Plugin {
         return new Manifest() {{
             authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
             description = "Lets you switch between multiple accounts with chat commands.";
-            version = "1.0.3";
+            version = "1.0.4";
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
     }
@@ -61,7 +61,7 @@ public class AccountSwitcher extends Plugin {
         commandChoices = new ArrayList<>();
         ApplicationCommandOption requiredNameOption = new ApplicationCommandOption(ApplicationCommandType.STRING, "name", "Name", null, true, true, null, null);
         ApplicationCommandOption requiredNewNameOption = new ApplicationCommandOption(ApplicationCommandType.STRING, "newName", "New Name", null, true, true, null, null);
-        ApplicationCommandOption requiredTokenOption = new ApplicationCommandOption(ApplicationCommandType.STRING, "token", "Account Token (type \"current token\" to use your current token)", null, true, true, null, null);
+        ApplicationCommandOption requiredTokenOption = new ApplicationCommandOption(ApplicationCommandType.STRING, "token", "Account Token", null, true, true, null, null);
         ApplicationCommandOption requiredNameChoice = new ApplicationCommandOption(ApplicationCommandType.STRING, "name", "Name", null, true, true, commandChoices, null);
         ApplicationCommandOption restartDiscordChoice = new ApplicationCommandOption(ApplicationCommandType.BOOLEAN, "restart", "Will reload discord when switching accounts (use this if you're having issues)", null, false, true, null, null);
 
@@ -69,8 +69,8 @@ public class AccountSwitcher extends Plugin {
             add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "add", "Add a token", null, false, false, null, Arrays.asList(requiredNameOption, requiredTokenOption)));
             add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "remove", "Remove a token", null, false, false, null, Collections.singletonList(requiredNameChoice)));
             add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "list", "Lists all tokens", null, false, false, null, Collections.emptyList()));
-            add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "update", "Update a Token (from its name value)", null, false, false, null, Arrays.asList(requiredNameChoice, requiredTokenOption)));
-            add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "rename", "Rename a token (from its name value)", null, false, false, null, Arrays.asList(requiredNameChoice, requiredNewNameOption)));
+            add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "update", "Update a token", null, false, false, null, Arrays.asList(requiredNameChoice, requiredTokenOption)));
+            add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "rename", "Rename a token", null, false, false, null, Arrays.asList(requiredNameChoice, requiredNewNameOption)));
             add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "login", "Log into a token", null, false, false, null, Arrays.asList(requiredNameChoice, restartDiscordChoice)));
         }};
 
@@ -78,6 +78,15 @@ public class AccountSwitcher extends Plugin {
         if (settings != null) for (String name : settings.keySet()) addChoice(name);
 
         commands.registerCommand("token", "Log into and manage your saved tokens", Commands, args -> {
+            // username takes a little bit to update which is why it's here
+            if (settings.isEmpty()) {
+                String username = StoreStream.getUsers().getMe().getUsername();
+                String token = StoreStream.getAuthentication().getAuthToken$app_productionGoogleRelease();
+                settings.put(username, token);
+                sets.setObject("tokens", settings);
+                addChoice(username);
+            }
+
             if (args.containsKey("add")) return AddToken.execute((Map<String, ?>) args.get("add"), sets, this);
             if (args.containsKey("remove")) return RemoveToken.execute((Map<String, ?>) args.get("remove"), sets, this);
             if (args.containsKey("list")) return ListTokens.execute(sets);
