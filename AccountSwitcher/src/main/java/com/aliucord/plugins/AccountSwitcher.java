@@ -32,7 +32,7 @@ public class AccountSwitcher extends Plugin {
         return new Manifest() {{
             authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
             description = "Lets you switch between multiple accounts with chat commands.";
-            version = "1.0.41";
+            version = "1.0.42";
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
     }
@@ -74,18 +74,15 @@ public class AccountSwitcher extends Plugin {
             add(new ApplicationCommandOption(ApplicationCommandType.SUBCOMMAND, "login", "Log into a token", null, false, false, null, Arrays.asList(requiredNameChoice, restartDiscordChoice)));
         }};
 
-        HashMap<String, String> settings = sets.getObject("tokens", null, settingsType);
-        if (settings != null) for (String name : settings.keySet()) addChoice(name);
+        HashMap<String, String> settings = sets.getObject("tokens", new HashMap<>(), settingsType);
+        if (!settings.isEmpty()) for (String name : settings.keySet()) addChoice(name);
 
         commands.registerCommand("token", "Log into and manage your saved tokens", Commands, args -> {
             // username takes a little bit to update which is why it's here
-            HashMap<String, String> tempSettings = sets.getObject("tokens", null, settingsType);
-            if (tempSettings.isEmpty()) {
+            if (settings.isEmpty()) {
                 String username = StoreStream.getUsers().getMe().getUsername();
                 String token = StoreStream.getAuthentication().getAuthToken$app_productionGoogleRelease();
-                tempSettings.put(username, token);
-                sets.setObject("tokens", tempSettings);
-                addChoice(username);
+                settings.put(username, token); sets.setObject("tokens", settings); addChoice(username);
             }
 
             if (args.containsKey("add")) return AddToken.execute((Map<String, ?>) args.get("add"), sets, this);
