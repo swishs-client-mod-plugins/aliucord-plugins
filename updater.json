@@ -6,6 +6,9 @@
     "NSFWGateBypass": {
         "version": "1.0.1"
     },
+    "ReplaceTMs": {
+        "version": "1.0.1"
+    },
     "default": {
         "minimumDiscordVersion": 1456,
         "version": "1.0.0",
