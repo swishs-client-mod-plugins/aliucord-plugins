@@ -20,7 +20,7 @@ public class ReplaceTMs extends Plugin {
         return new Manifest() {{
             authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
             description = "Replaces the \":tm:\" emoji in all messages with the actual ™ character.";
-            version = "1.0.1";
+            version = "1.0.2";
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
     }
@@ -35,12 +35,21 @@ public class ReplaceTMs extends Plugin {
     @Override
     public void start(Context context) {
         patcher.prePatch("com.discord.widgets.chat.MessageManager", "sendMessage", (_this, args) -> {
-            args.set(0, args.get(0).toString().replaceAll("™️", "™"));
+            args.set(0, replaceSymbols(args.get(0).toString()));
             return new PrePatchRes(args);
         });
 
-        patcher.patch("com.discord.models.domain.ModelMessage", "getContent", (_this, args, res) ->
-            res != null ? res.toString().replaceAll("™️", "™") : res);
+        patcher.patch("com.discord.models.domain.ModelMessage", "getContent", (_this, args, res) -> {
+            if (res != null) return res;
+            return replaceSymbols(res.toString());
+        });
+    }
+
+    public String replaceSymbols(String str) {
+        return str
+            .replaceAll("™️", "™")
+            .replaceAll("©️", "©")
+            .replaceAll("®️", "®");
     }
 
     @Override
