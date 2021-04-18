@@ -20,7 +20,7 @@ public class ReplaceTMs extends Plugin {
         return new Manifest() {{
             authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
             description = "Replaces the \":tm:\" emoji in all messages with the actual ™ character.";
-            version = "1.0.2";
+            version = "1.0.3";
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
     }
@@ -40,7 +40,7 @@ public class ReplaceTMs extends Plugin {
         });
 
         patcher.patch("com.discord.models.domain.ModelMessage", "getContent", (_this, args, res) -> {
-            if (res != null) return res;
+            if (res == null) return res;
             return replaceSymbols(res.toString());
         });
     }
