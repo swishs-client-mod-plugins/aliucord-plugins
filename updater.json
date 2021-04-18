@@ -7,7 +7,7 @@
         "version": "1.0.1"
     },
     "ReplaceTMs": {
-        "version": "1.0.2"
+        "version": "1.0.3"
     },
     "default": {
         "minimumDiscordVersion": 1456,
