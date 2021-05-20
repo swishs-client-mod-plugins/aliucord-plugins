@@ -36,7 +36,7 @@ public class ReplaceTMs extends Plugin {
     public void start(Context context) {
         patcher.prePatch("com.discord.widgets.chat.MessageManager", "sendMessage", (_this, args) -> {
             args.set(0, replaceSymbols(args.get(0).toString()));
-            return new PrePatchRes(args);
+            return null;
         });
 
         patcher.patch("com.discord.models.domain.ModelMessage", "getContent", (_this, args, res) -> {

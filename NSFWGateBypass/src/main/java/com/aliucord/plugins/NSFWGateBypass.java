@@ -36,7 +36,7 @@ public class NSFWGateBypass extends Plugin {
     @Override
     public void start(Context context) {
         patcher.patch(className, "getNsfwAllowance", (_this, args, res) -> NsfwAllowance.ALLOWED);
-        patcher.prePatch(className, "getHasBirthday", (_this, args) -> new PrePatchRes(args, true));
+        patcher.prePatch(className, "getHasBirthday", (_this, args) -> new PrePatchRes(true));
     }
 
     @Override
