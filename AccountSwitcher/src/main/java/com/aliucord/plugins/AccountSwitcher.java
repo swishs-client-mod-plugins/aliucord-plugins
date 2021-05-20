@@ -32,21 +32,21 @@ public class AccountSwitcher extends Plugin {
         return new Manifest() {{
             authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
             description = "Lets you switch between multiple accounts with chat commands.";
-            version = "1.0.42";
+            version = "1.0.5";
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
     }
 
     public static Map<String, List<String>> getClassesToPatch() {
         return new HashMap<String, List<String>>() {{
-            put("com.discord.stores.StoreAuthentication", Collections.singletonList("handleAuthToken$app_productionGoogleRelease"));
+            put("com.discord.stores.StoreAuthentication", Collections.singletonList("handleAuthToken$app_productionBetaRelease"));
         }};
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void start(Context context) {
-        patcher.patch("com.discord.stores.StoreAuthentication", "handleAuthToken$app_productionGoogleRelease", (_this, args, ret) -> {
+        patcher.patch("com.discord.stores.StoreAuthentication", "handleAuthToken$app_productionBetaRelease", (_this, args, ret) -> {
             if (userSettings != null) {
                 userSettings.remove("STORE_AUTHED_TOKEN");
                 userSettings.forEach((key, value) -> {
@@ -81,7 +81,7 @@ public class AccountSwitcher extends Plugin {
             // username takes a little bit to update which is why it's here
             if (settings.isEmpty()) {
                 String username = StoreStream.getUsers().getMe().getUsername();
-                String token = StoreStream.getAuthentication().getAuthToken$app_productionGoogleRelease();
+                String token = StoreStream.getAuthentication().getAuthToken$app_productionBetaRelease();
                 settings.put(username, token); sets.setObject("tokens", settings); addChoice(username);
             }
 

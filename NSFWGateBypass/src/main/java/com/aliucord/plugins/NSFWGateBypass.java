@@ -22,7 +22,7 @@ public class NSFWGateBypass extends Plugin {
         return new Manifest() {{
             authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
             description = "Bypasses the NSFW age gate.";
-            version = "1.0.1";
+            version = "1.0.2";
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
     }
