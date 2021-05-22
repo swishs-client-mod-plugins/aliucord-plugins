@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.aliucord.entities.Plugin;
 import com.aliucord.patcher.PrePatchRes;
+import com.aliucord.plugins.callconfirmationdialog.CallDialog;
 import com.aliucord.Utils;
 
 import com.discord.widgets.user.calls.PrivateCallLauncher;
@@ -22,7 +23,7 @@ public class CallConfirmationDialog extends Plugin {
     public Manifest getManifest() {
         return new Manifest() {{
             authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
-            description = "Adds a confirmation modal to launching private calls to prevent accidental calls.";
+            description = "Adds a confirm dialog to every voice and video call button; making accidental calls less prevalent.";
             version = "1.0.0";
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
