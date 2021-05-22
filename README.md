@@ -3,11 +3,14 @@ This is my [Aliucord](https://github.com/Aliucord) Plugin repository.
 
 You can find plugin builds in the `builds` branch.
 
-### AccountSwitcher
+### [AccountSwitcher](https://github.com/swishs-client-mod-plugins/aliucord-plugins/blob/builds/AccountSwitcher.zip?raw=true)
 Lets you switch accounts easily with chat commands.
 
-### ReplaceTMs
+### [CallConfirmationDialog](https://github.com/swishs-client-mod-plugins/aliucord-plugins/blob/builds/CallConfirmationDialog.zip?raw=true)
+Adds a confirm dialog to every voice and video call button; making accidental calls less prevalent.
+
+### [ReplaceTMs](https://github.com/swishs-client-mod-plugins/aliucord-plugins/blob/builds/ReplaceTMs.zip?raw=true)
 Replaces the ":tm:" emoji in all messages with the actual ™ character.
 
-### NSFWGateBypass
+### [NSFWGateBypass](https://github.com/swishs-client-mod-plugins/aliucord-plugins/blob/builds/NSFWGateBypass.zip?raw=true)
 Bypasses the NSFW gate that discord shows when you try to open an NSFW channel and your age is set under 18.
