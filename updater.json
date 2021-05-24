@@ -12,6 +12,9 @@
     "CallConfirmationDialog": {
         "version": "1.0.0"
     },
+    "ReactionNotifications": {
+        "version": "1.0.0"
+    },
     "default": {
         "minimumDiscordVersion": 1456,
         "version": "1.0.0",
