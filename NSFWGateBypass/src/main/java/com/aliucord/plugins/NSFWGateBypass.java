@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2021 Paige
+ * Licensed under the GNU General Public License v3.0
+ */
+
 package com.aliucord.plugins;
 
 import android.content.Context;
@@ -26,17 +31,17 @@ public class NSFWGateBypass extends Plugin {
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
     }
-    private static final String className = "com.discord.models.user.MeUser";
+    private static final String currentUserClass = "com.discord.models.user.MeUser";
     public static Map<String, List<String>> getClassesToPatch() {
         return new HashMap<String, List<String>>() {{
-            put(className, Arrays.asList("getNsfwAllowance", "getHasBirthday"));
+            put(currentUserClass, Arrays.asList("getNsfwAllowance", "getHasBirthday"));
         }};
     }
 
     @Override
     public void start(Context context) {
-        patcher.patch(className, "getNsfwAllowance", (_this, args, res) -> NsfwAllowance.ALLOWED);
-        patcher.prePatch(className, "getHasBirthday", (_this, args) -> new PrePatchRes(true));
+        patcher.patch(currentUserClass, "getNsfwAllowance", (_this, args, res) -> NsfwAllowance.ALLOWED);
+        patcher.prePatch(currentUserClass, "getHasBirthday", (_this, args) -> new PrePatchRes(true));
     }
 
     @Override

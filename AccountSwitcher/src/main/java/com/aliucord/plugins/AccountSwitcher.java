@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2021 Paige
+ * Licensed under the GNU General Public License v3.0
+ */
+
 package com.aliucord.plugins;
 
 import android.content.Context;

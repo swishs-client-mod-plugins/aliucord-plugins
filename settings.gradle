@@ -2,6 +2,7 @@ include ':AccountSwitcher'
 include ':NSFWGateBypass'
 include ':ReplaceTMs'
 include ':CallConfirmationDialog'
+include ':ReactionNotifications'
 rootProject.name = "plugins"
 
 include ':Aliucord'
