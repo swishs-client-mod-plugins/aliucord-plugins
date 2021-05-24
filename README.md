@@ -9,6 +9,9 @@ Lets you switch accounts easily with chat commands.
 ### [CallConfirmationDialog](https://github.com/swishs-client-mod-plugins/aliucord-plugins/blob/builds/CallConfirmationDialog.zip?raw=true)
 Adds a confirm dialog to every voice and video call button; making accidental calls less prevalent.
 
+### [ReactionNotifications](https://github.com/swishs-client-mod-plugins/aliucord-plugins/blob/builds/ReactionNotifications.zip?raw=true)
+Sends you a notification when someone reacts to your messages.
+
 ### [ReplaceTMs](https://github.com/swishs-client-mod-plugins/aliucord-plugins/blob/builds/ReplaceTMs.zip?raw=true)
 Replaces the ":tm:" emoji in all messages with the actual ™ character.
 
