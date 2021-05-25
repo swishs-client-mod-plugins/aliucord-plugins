@@ -36,12 +36,12 @@ public class ReactionNotifications extends Plugin {
         return new Manifest() {{
             authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
             description = "Sends you a notification when someone reacts to your messages.";
-            version = "1.0.0";
+            version = "1.0.1";
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
     }
 
-    public static String storeMessageReactionsClass = "com.discord.stores.StoreMessageReactions";
+    private static String storeMessageReactionsClass = "com.discord.stores.StoreMessageReactions";
     public static Map<String, List<String>> getClassesToPatch() {
         return new HashMap<String, List<String>>() {{
             put(storeMessageReactionsClass, Arrays.asList("handleReactionAdd", "handleReactionRemove"));
@@ -62,11 +62,12 @@ public class ReactionNotifications extends Plugin {
     private void handleReactionData(List<Object> args, boolean isRemoved) {
         MessageReactionUpdate reaction = (MessageReactionUpdate) args.get(0);
         ModelMessage message = StoreStream.getMessages().getMessage(reaction.a(), reaction.c());
-        if (StoreStream.getUsers().getMe().getId() == message.getAuthor().f()) {
+        if (message != null && StoreStream.getUsers().getMe().getId() == message.getAuthor().f()) {
+           if (StoreStream.getUsers().getMe().getId() == reaction.d()) return;
             CoreUser user = (CoreUser) StoreStream.getUsers().getUsers().get(reaction.d());
             Channel channel = StoreStream.getChannels().getChannel(message.getChannelId());
             NotificationData notificationData = new NotificationData() {{
-                title = "Reaction Added";
+                title = "Reaction " + (isRemoved ? "Removed" : "Added");
                 body = Utils.renderMD(
                     "**" + user.getUsername() + "#" + user.getDiscriminator()
                      + (isRemoved ? "** removed reaction " : "** reacted with ") + reaction.b().c()
