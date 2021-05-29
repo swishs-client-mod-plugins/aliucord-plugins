@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2021 Paige
+ * Licensed under the GNU General Public License v3.0
+ */
+
 package com.aliucord.plugins.callconfirmationdialog;
 
 import android.annotation.SuppressLint;
@@ -8,6 +13,7 @@ import android.content.Context;
 import androidx.fragment.app.FragmentManager;
 
 import com.aliucord.Utils;
+
 import com.discord.app.AppComponent;
 import com.discord.app.AppDialog;
 import com.discord.app.AppPermissions;

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2021 Paige
+ * Licensed under the GNU General Public License v3.0
+ */
+
 package com.aliucord.plugins;
 
 import android.content.Context;
@@ -7,7 +12,6 @@ import androidx.annotation.NonNull;
 import com.aliucord.entities.Plugin;
 import com.aliucord.patcher.PrePatchRes;
 import com.aliucord.plugins.callconfirmationdialog.CallDialog;
-import com.aliucord.Utils;
 
 import com.discord.widgets.user.calls.PrivateCallLauncher;
 
@@ -24,7 +28,7 @@ public class CallConfirmationDialog extends Plugin {
         return new Manifest() {{
             authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
             description = "Adds a confirm dialog to every voice and video call button; making accidental calls less prevalent.";
-            version = "1.0.0";
+            version = "1.0.1";
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
     }
@@ -41,7 +45,7 @@ public class CallConfirmationDialog extends Plugin {
         patcher.prePatch(privateCallLauncherClass, "launchVoiceCall", (_this, args) -> {
            CallDialog callDialog = new CallDialog();
            callDialog.passCallUser((PrivateCallLauncher) _this, false, (long) args.get(0));
-           callDialog.show(Utils.appActivity.getSupportFragmentManager(), "CallDialog");
+           callDialog.show(((PrivateCallLauncher) _this).getFragmentManager(), "CallDialog");
 
            return new PrePatchRes(null);
         });
@@ -49,7 +53,7 @@ public class CallConfirmationDialog extends Plugin {
         patcher.prePatch(privateCallLauncherClass, "launchVideoCall", (_this, args) -> {
             CallDialog callDialog = new CallDialog();
             callDialog.passCallUser((PrivateCallLauncher) _this, true, (long) args.get(0));
-            callDialog.show(Utils.appActivity.getSupportFragmentManager(), "CallDialog");
+            callDialog.show(((PrivateCallLauncher) _this).getFragmentManager(), "CallDialog");
 
             return new PrePatchRes(null);
         });
