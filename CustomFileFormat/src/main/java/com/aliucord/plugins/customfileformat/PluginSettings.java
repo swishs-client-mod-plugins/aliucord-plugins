@@ -35,7 +35,7 @@ import com.lytefast.flexinput.R$h;
 
 @SuppressLint("SetTextI18n")
 public final class PluginSettings extends SettingsPage {
-    private static final String plugin = "CustomFileNames";
+    private static final String plugin = "CustomFileFormat";
 
     @Override
     @SuppressWarnings("ResultOfMethodCallIgnored")
