@@ -15,5 +15,8 @@ Sends you a notification when someone reacts to your messages.
 ### [ReplaceTMs](https://github.com/swishs-client-mod-plugins/aliucord-plugins/blob/builds/ReplaceTMs.zip?raw=true)
 Replaces the ":tm:" emoji in all messages with the actual ™ character.
 
+### [CustomFileFormat](https://github.com/swishs-client-mod-plugins/aliucord-plugins/blob/builds/CustomFileFormat.zip?raw=true)
+Lets you customize the file format of uploaded/downloaded files.
+
 ### [NSFWGateBypass](https://github.com/swishs-client-mod-plugins/aliucord-plugins/blob/builds/NSFWGateBypass.zip?raw=true)
 Bypasses the NSFW gate that discord shows when you try to open an NSFW channel and your age is set under 18.

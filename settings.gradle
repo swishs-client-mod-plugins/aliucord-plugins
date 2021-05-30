@@ -3,6 +3,7 @@ include ':NSFWGateBypass'
 include ':ReplaceTMs'
 include ':CallConfirmationDialog'
 include ':ReactionNotifications'
+include ':CustomFileFormat'
 rootProject.name = "plugins"
 
 include ':Aliucord'
