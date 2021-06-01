@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import com.aliucord.entities.Plugin;
 import com.aliucord.patcher.PrePatchRes;
 import com.aliucord.plugins.callconfirmationdialog.CallDialog;
-
 import com.discord.widgets.user.calls.PrivateCallLauncher;
 
 import java.util.Arrays;
@@ -28,7 +27,7 @@ public class CallConfirmationDialog extends Plugin {
         return new Manifest() {{
             authors = new Manifest.Author[]{new Manifest.Author("Swishilicous", 474322346937810955L)};
             description = "Adds a confirm dialog to every voice and video call button; making accidental calls less prevalent.";
-            version = "1.0.1";
+            version = "1.0.2";
             updateUrl = "https://raw.githubusercontent.com/swishs-client-mod-plugins/aliucord-plugins/builds/updater.json";
         }};
     }
@@ -44,7 +43,7 @@ public class CallConfirmationDialog extends Plugin {
     public void start(Context context) {
         patcher.prePatch(privateCallLauncherClass, "launchVoiceCall", (_this, args) -> {
            CallDialog callDialog = new CallDialog();
-           callDialog.passCallUser((PrivateCallLauncher) _this, false, (long) args.get(0));
+           callDialog.passCallUser((PrivateCallLauncher) _this, CallType.VOICE, (long) args.get(0));
            callDialog.show(((PrivateCallLauncher) _this).getFragmentManager(), "CallDialog");
 
            return new PrePatchRes(null);
@@ -52,7 +51,7 @@ public class CallConfirmationDialog extends Plugin {
 
         patcher.prePatch(privateCallLauncherClass, "launchVideoCall", (_this, args) -> {
             CallDialog callDialog = new CallDialog();
-            callDialog.passCallUser((PrivateCallLauncher) _this, true, (long) args.get(0));
+            callDialog.passCallUser((PrivateCallLauncher) _this, CallType.VIDEO, (long) args.get(0));
             callDialog.show(((PrivateCallLauncher) _this).getFragmentManager(), "CallDialog");
 
             return new PrePatchRes(null);
@@ -61,4 +60,5 @@ public class CallConfirmationDialog extends Plugin {
 
     @Override
     public void stop(Context context) { patcher.unpatchAll(); }
+    public enum CallType { VOICE, VIDEO }
 }
