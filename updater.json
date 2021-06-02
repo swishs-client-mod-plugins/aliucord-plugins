@@ -1,7 +1,7 @@
 {
     "AccountSwitcher": {
         "minimumDiscordVersion": 1498,
-        "version": "1.0.5"
+        "version": "1.0.6"
     },
     "NSFWGateBypass": {
         "version": "1.0.2"
@@ -10,7 +10,8 @@
         "version": "1.0.4"
     },
     "CallConfirmationDialog": {
-        "version": "1.0.1"
+        "minimumDiscordVersion": 78204,
+        "version": "1.0.2"
     },
     "ReactionNotifications": {
         "version": "1.0.1"
