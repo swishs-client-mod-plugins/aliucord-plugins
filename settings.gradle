@@ -1,4 +1,3 @@
-include ':AccountSwitcher'
 include ':NSFWGateBypass'
 include ':ReplaceTMs'
 include ':CallConfirmationDialog'
