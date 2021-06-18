@@ -16,6 +16,9 @@
     "ReactionNotifications": {
         "version": "1.0.1"
     },
+    "CustomFileFormat": {
+        "version": "1.0.1"
+    },
     "default": {
         "minimumDiscordVersion": 1456,
         "version": "1.0.0",

@@ -26,11 +26,12 @@ import com.aliucord.Utils;
 import com.aliucord.api.SettingsAPI;
 import com.aliucord.fragments.SettingsPage;
 import com.aliucord.views.Divider;
+import com.aliucord.views.SaveButton;
 import com.aliucord.views.TextInput;
 
 import com.discord.utilities.color.ColorCompat;
-import com.discord.R;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lytefast.flexinput.R$h;
 
 @SuppressLint("SetTextI18n")
@@ -55,21 +56,26 @@ public final class PluginSettings extends SettingsPage {
         LinearLayout layout = (LinearLayout) ((NestedScrollView) ((CoordinatorLayout) view).getChildAt(1)).getChildAt(0);
         layout.setPadding(padding, padding, padding, padding);
 
+        SaveButton saveButtonLayout = new SaveButton(context);
+        FloatingActionButton saveButton = (FloatingActionButton) saveButtonLayout.getChildAt(0);
+        saveButton.hide();
+
         TextInput uploadFormat = new TextInput(context);
         uploadFormat.setHint("Upload Format");
         uploadFormat.setSuffixText(".EXT");
         uploadFormat.setSuffixTextColor(uploadFormat.getHintTextColor());
-        uploadFormat.setBackgroundColor(ColorCompat.getThemedColor(view, R.attr.primary_400));
+        uploadFormat.setBackgroundColor(ColorCompat.getThemedColor(view, 0));
         EditText uploadEditText = uploadFormat.getEditText();
         if (uploadEditText != null) uploadEditText.setMaxLines(1);
         uploadEditText.setText(sets.getString("uploadFormat", "{original}"));
         layout.addView(uploadFormat);
 
-        if (uploadEditText != null) uploadEditText.addTextChangedListener(new TextWatcher() {
+        uploadEditText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty()) sets.setString("uploadFormat", "{original}");
-                else sets.setString("uploadFormat", s.toString());
-                reloadPlugin();
+                if (s.toString().equals(sets.getString("uploadFormat", "{original}")))
+                    saveButton.hide();
+                else
+                    saveButton.show();
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -81,17 +87,18 @@ public final class PluginSettings extends SettingsPage {
         downloadFormat.setHint("Download Format");
         downloadFormat.setSuffixText(".EXT");
         downloadFormat.setSuffixTextColor(downloadFormat.getHintTextColor());
-        downloadFormat.setBackgroundColor(ColorCompat.getThemedColor(view, R.attr.primary_400));
+        downloadFormat.setBackgroundColor(ColorCompat.getThemedColor(view, 0));
         EditText downloadEditText = downloadFormat.getEditText();
         if (downloadEditText != null) downloadEditText.setMaxLines(1);
         downloadEditText.setText(sets.getString("downloadFormat", "{original}"));
         layout.addView(downloadFormat);
 
-        if (downloadEditText != null) downloadEditText.addTextChangedListener(new TextWatcher() {
+        downloadEditText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty()) sets.setString("downloadFormat", "{original}");
-                else sets.setString("downloadFormat", s.toString());
-                reloadPlugin();
+                if (s.toString().equals(sets.getString("downloadFormat", "{original}")))
+                    saveButton.hide();
+                else
+                    saveButton.show();
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -105,6 +112,20 @@ public final class PluginSettings extends SettingsPage {
         itemSubtext.setTypeface(ResourcesCompat.getFont(context, Constants.Fonts.whitney_medium));
         itemSubtext.setText("Variables: {original} {timestamp} {random}");
         layout.addView(itemSubtext);
+
+        saveButton.setOnClickListener((View _view) -> {
+            String downloadText = downloadEditText.getText().toString();
+            if (downloadText.isEmpty()) sets.setString("downloadFormat", "{original}");
+            else sets.setString("downloadFormat", downloadText);
+
+            String uploadText = uploadEditText.getText().toString();
+            if (uploadText.isEmpty()) sets.setString("uploadFormat", "{original}");
+            else sets.setString("uploadFormat", uploadText);
+
+            saveButton.hide();
+            reloadPlugin();
+        });
+        layout.addView(saveButtonLayout);
     }
 
     public void reloadPlugin() {
